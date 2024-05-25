@@ -1,10 +1,10 @@
 import {  render, screen } from '@testing-library/react'
 import TermsAndConditions from '../../src/components/TermsAndConditions'
+import userEvent from '@testing-library/user-event'
 
 describe('TermsAndConditions', () => {
   it('should render with correct text and initial state', ()=>{
     render(<TermsAndConditions />)
-    screen.debug()
     const heading = screen.getByRole('heading')
     expect(heading).toBeInTheDocument()
     expect(heading).toHaveTextContent("Terms & Conditions")
@@ -15,6 +15,14 @@ describe('TermsAndConditions', () => {
     expect(submitBtn).toBeInTheDocument()
     expect(submitBtn).toBeDisabled()
   })
-  it.todo('should render the accept button', ()=>{})
+  it('should enable the button when the checkbox is checked', async()=>{
+    render(<TermsAndConditions />)
+    
+    const checkbox = screen.getByRole('checkbox')
+    const user = userEvent.setup()
+    await user.click(checkbox)
+
+    expect(screen.getByRole('button')).toBeEnabled()
+  })
   it.todo('should render the decline button', ()=>{})
  })
