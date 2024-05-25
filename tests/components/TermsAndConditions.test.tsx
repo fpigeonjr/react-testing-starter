@@ -3,26 +3,26 @@ import TermsAndConditions from '../../src/components/TermsAndConditions'
 import userEvent from '@testing-library/user-event'
 
 describe('TermsAndConditions', () => {
+  const renderComponent = () => {render(<TermsAndConditions />)
+    return {
+      heading: screen.getByRole('heading'),
+      checkbox: screen.getByRole('checkbox'),
+      submitBtn: screen.getByRole('button', {name: /submit/i})
+    }
+  }
   it('should render with correct text and initial state', ()=>{
-    render(<TermsAndConditions />)
-    const heading = screen.getByRole('heading')
-    expect(heading).toBeInTheDocument()
+    const {checkbox, heading, submitBtn } = renderComponent()
+    
     expect(heading).toHaveTextContent("Terms & Conditions")
-    const checkbox = screen.getByRole('checkbox')
-    expect(checkbox).toBeInTheDocument()
     expect(checkbox).not.toBeChecked()
-    const submitBtn = screen.getByRole('button', {name: /submit/i})
-    expect(submitBtn).toBeInTheDocument()
     expect(submitBtn).toBeDisabled()
   })
   it('should enable the button when the checkbox is checked', async()=>{
-    render(<TermsAndConditions />)
+    const {checkbox, submitBtn } = renderComponent()
     
-    const checkbox = screen.getByRole('checkbox')
     const user = userEvent.setup()
     await user.click(checkbox)
 
-    expect(screen.getByRole('button')).toBeEnabled()
+    expect(submitBtn).toBeEnabled()
   })
-  it.todo('should render the decline button', ()=>{})
- })
+})
