@@ -1,11 +1,11 @@
 import { Toaster } from "react-hot-toast"
-import ToastDemo from "../components/ToastDemo"
 import OrderStatusSelector from "../components/OrderStatusSelector"
+import ToastDemo from "../components/ToastDemo"
 
 const PlaygroundPage = () => {
   return (
     <>
-      <OrderStatusSelector onChange={() => {}} />
+      <OrderStatusSelector onChange={console.log} />
       <ToastDemo />
       <Toaster />
     </>
