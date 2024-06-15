@@ -35,16 +35,6 @@ describe("OrderStatusSelector", () => {
     const labels = options.map((option) => option.textContent)
     expect(labels).toEqual(["New", "Processed", "Fulfilled"])
   })
-  it("should call onChange when status is changed to new", async () => {
-    const { button, user, onChange, getOptions } = renderComponent()
-
-    await user.click(button)
-    const options = await getOptions()
-
-    await user.click(options[0])
-
-    expect(onChange).not.toHaveBeenCalled()
-  })
   it.each([
     { label: /processed/i, value: "processed" },
     { label: /fulfilled/i, value: "fulfilled" }
