@@ -1,18 +1,24 @@
 import { http, HttpResponse } from "msw"
+import { products, categories } from "./data"
 
 export const handlers = [
   http.get("/categories", () => {
-    return HttpResponse.json([
-      { id: 1, name: "Electronics" },
-      { id: 2, name: "Beauty" },
-      { id: 3, name: "Garden" }
-    ])
+    return HttpResponse.json(categories)
   }),
-  http.get("/products", ()=>{
-    return HttpResponse.json([
-      { id: 1, name: "iPhone 12" },
-      { id: 2, name: "MacBook Pro" },
-      { id: 3, name: "iPad Pro" }
-    ])
+  http.get("/products", () => {
+    return HttpResponse.json(products)
+  }),
+  http.get("/products/:id", ({ params }) => {
+    const { id } = params
+    if (!id) {
+      return new HttpResponse(null, { status: 400 })
+    }
+
+    const product = products.find((product) => product.id === Number(id))
+    if (!product) {
+      return new HttpResponse(null, { status: 404 })
+    }
+
+    return HttpResponse.json(product ? product : null)
   })
 ]
